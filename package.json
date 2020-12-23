@@ -1,0 +1,19 @@
+{
+  "name": "image-processing-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jungleBadger/udacity-image-processing-api.git"
+  },
+  "author": "dcerag",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jungleBadger/udacity-image-processing-api/issues"
+  },
+  "homepage": "https://github.com/jungleBadger/udacity-image-processing-api#readme"
+}
