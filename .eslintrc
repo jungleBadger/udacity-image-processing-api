@@ -1,0 +1,40 @@
+{
+	"extends": ["eslint:recommended", "plugin:vue/base"],
+	"env": {
+		"browser": true,
+		"commonjs": true,
+		"node": true,
+		"mocha": true,
+		"es2017": true
+	},
+	"parserOptions": {
+		"parser": "babel-eslint",
+		"sourceType": "module",
+		"allowImportExportEverywhere": true
+	},
+	"rules": {
+		"quotes": ["error", "double"],
+		"no-console": "warn",
+		"comma-dangle": "warn",
+		"no-alert": "warn",
+		"no-confusing-arrow": "error",
+		"no-new": "error",
+		"no-new-func": "error",
+		"no-new-wrappers": "error",
+		"no-param-reassign": "error",
+		"no-script-url": "error",
+		"no-self-compare": "error",
+		"no-caller": "error",
+		"array-callback-return": "error",
+		"no-empty-function": "error",
+		"default-case": "error",
+		"indent": ["warn", "tab", {
+			"outerIIFEBody": 1
+		}],
+		"keyword-spacing": ["error", {
+			"before": true,
+			"after": true
+		}],
+		"guard-for-in": "error"
+	}
+}
