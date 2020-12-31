@@ -1,5 +1,5 @@
 {
-	"extends": ["tslint:recommended", "eslint:recommended", "plugin:vue/base"],
+	"extends": ["eslint:recommended", "plugin:vue/base"],
 	"env": {
 		"browser": true,
 		"commonjs": true,

@@ -1,4 +1,6 @@
 "use strict";
 
+import test from "./helpers/test";
 
-console.log("x");
+console.log("2x1");
+console.log(test());
