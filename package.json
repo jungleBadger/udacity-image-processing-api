@@ -38,6 +38,7 @@
 		"helmet": "^4.3.1",
 		"http-server": "^0.12.3",
 		"morgan": "^1.10.0",
+		"sharp": "^0.27.0",
 		"vue-i18n": "^9.0.0-beta.17",
 		"vue-router": "^4.0.2",
 		"vue-style-loader": "^4.1.2",
