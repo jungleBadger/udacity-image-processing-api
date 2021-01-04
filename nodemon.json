@@ -1,6 +1,7 @@
 {
 	"watch": [
 		"./server/src/*.ts",
+		"./server/src/**/*.ts",
 		"./server/src/*.js"
 	],
 	"ignore": [

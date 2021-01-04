@@ -76,3 +76,4 @@ server/.env
 /server/dist
 
 .env
+/images/processed/*
