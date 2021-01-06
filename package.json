@@ -15,7 +15,7 @@
 		"watch": "webpack --env.NODE_ENV=development --env.ENABLE_WATCH",
 		"lint:server": "gulp lint:server",
 		"build:server": "npm run lint:server && tsc server/src/index.ts -outDir server/dist",
-		"start:server": "npm run build:server && node server/dist/index.js",
+		"start:server": "npm run build:server && cross-env DEBUG=app:* node server/dist/index.js",
 		"start:server:dev": "nodemon",
 		"test:server": "npm run build:server && jest ./test/sharpImage.test.js --notify",
 		"documentation": "npm run build:server && gulp swagger-route && gulp doc"
@@ -67,6 +67,7 @@
 		"babel-plugin-dynamic-import-node": "^2.3.3",
 		"babel-preset-env": "^1.7.0",
 		"clean-webpack-plugin": "^3.0.0",
+		"cross-env": "^7.0.3",
 		"cssnano": "^4.1.10",
 		"envify": "^4.1.0",
 		"eslint": "^7.17.0",
