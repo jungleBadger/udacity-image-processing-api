@@ -27,14 +27,14 @@ After installing the dependencies, building and executing the project, the endpo
 
 Considering the app running at port 3030 on your local environment, you can access the following endpoints
 
-*. Getting the original image - [http://localhost:3030/api/image?imageId=fjord.jpg](http://localhost:3030/api/image?imageId=fjord.jpg)
-*. Getting the same image with custom dimensions - [http://localhost:3030/api/image?imageId=fjord.jpg&width=100&height=100](http://localhost:3030/api/image?imageId=fjord.jpg&width=100&height=100)
+* Getting the original image - [http://localhost:3030/api/image?imageId=fjord.jpg](http://localhost:3030/api/image?imageId=fjord.jpg)
+* Getting the same image with custom dimensions - [http://localhost:3030/api/image?imageId=fjord.jpg&width=100&height=100](http://localhost:3030/api/image?imageId=fjord.jpg&width=100&height=100)
 
 
 The `/` root path can be used as alias, so the demonstrated above is equivalent to the demonstrated below:
 
-*. Getting the original image - [http://localhost:3030?imageId=fjord.jpg](http://localhost:3030?imageId=fjord.jpg)
-*. Getting the same image with custom dimensions - [http://localhost:3030?imageId=fjord.jpg&width=100&height=100](http://localhost:3030?imageId=fjord.jpg&width=100&height=100)
+* Getting the original image - [http://localhost:3030?imageId=fjord.jpg](http://localhost:3030?imageId=fjord.jpg)
+* Getting the same image with custom dimensions - [http://localhost:3030?imageId=fjord.jpg&width=100&height=100](http://localhost:3030?imageId=fjord.jpg&width=100&height=100)
 
 
 
