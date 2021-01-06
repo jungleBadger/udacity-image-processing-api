@@ -12,6 +12,6 @@
 		"./*.*"
 	],
 	"verbose": true,
-	"ext": "ts,js",
+	"ext": "ts,js,json",
 	"exec": "npm run build:server && node server/dist/index.js"
 }

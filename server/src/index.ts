@@ -1,7 +1,8 @@
 "use strict";
 
 import * as dotenv from "dotenv";
-dotenv.config();
+let dotEnvProps: any = {"silent": true};
+dotenv.config(dotEnvProps);
 
 import * as fs from "fs";
 import * as https from "https";
@@ -10,88 +11,72 @@ import * as express from "express";
 import * as debug from "debug";
 import * as helmet from "helmet";
 import * as morgan from "morgan";
-import * as sharp from "sharp";
+import * as engines from "consolidate"
 
-import SharpImageTs from "./helpers/sharpImage";
+import routes from "./routes/routes";
 
-(async function () {
-
-	console.log(SharpImageTs)
-
-	let x: any = await SharpImageTs.init("palmtunnel.jpg", 50, 50);
-	console.log(x)
-
-	const log = debug("app:main");
-	const httpLog = debug("app:endpoint");
-	const app = express();
-	let server;
-
-	log("Main dependencies loaded");
-
-	{
-		if (process.env.LOCAL_HTTPS) {
-			server = https.createServer({
-				"key": fs.readFileSync("./root/certificates/local/localhost-privkey.pem"),
-				"cert": fs.readFileSync("./root/certificates/local/localhost-cert.pem"),
-				"rejectUnauthorized": false
-			}, app);
-		} else {
-			server = http.createServer(app);
-		}
-
-		if (httpLog.enabled) {
-			app.use(
-				morgan(
-					"combined",
-					{
-						"stream": {
-							"write": msg => httpLog(msg.trimEnd())
-						}
-					}
-				)
-			);
-		}
-
-		app.use(express.urlencoded({
-			"extended": true,
-			"limit": "3mb"
-		}));
-
-		app.use(express.json({"limit": "3mb"}));
-
-		app.use(helmet({
-			"contentSecurityPolicy": false
-		}));
-
-		app.use("/docs/api", express.static(__dirname + "/docs/api/swagger-ui-dist"));
-	}
-
-	log("Express' plugins loaded");
+const log: any = debug("app:main");
+const httpLog: any = debug("app:endpoint");
+const app: any = express();
+const APP_PORT: Number|String = process.env.APP_PORT || 3030;
+let server: any;
 
 
-	app.get("/", (req, res) => {
-		return res.status(200).send("oiii");
-	});
-
-	app.get("/test", (req, res) => {
-		let transformer = (
-			sharp("./images/full/fjord.jpg").resize(300)
-		);
-		res.type("jpg").status(200);
-		transformer.pipe(res);
-	});
-
-	server.listen(process.env.APP_PORT, async function () {
-
-		if (process.env.LOCAL_HTTPS) {
-			log(`HTTPS Server up and running at https://localhost:${process.env.APP_PORT}`);
-		} else {
-			log(`HTTP Server up and running at port ${process.env.APP_PORT}`);
-		}
-
-	});
-}());
+log("Main dependencies loaded");
 
 
+if (process.env.LOCAL_HTTPS) {
+	server = https.createServer({
+		"key": fs.readFileSync("./root/certificates/local/localhost-privkey.pem"),
+		"cert": fs.readFileSync("./root/certificates/local/localhost-cert.pem"),
+		"rejectUnauthorized": false
+	}, app);
+} else {
+	server = http.createServer(app);
+}
+
+if (httpLog.enabled) {
+	app.use(
+		morgan(
+			"combined",
+			{
+				"stream": {
+					"write": msg => httpLog(msg.trimEnd())
+				}
+			}
+		)
+	);
+}
+
+app.engine("html", engines.ejs);
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/client");
+
+app.use(express.urlencoded({
+	"extended": true,
+	"limit": "3mb"
+}));
+
+app.use(express.json({"limit": "3mb"}));
+
+app.use(helmet({
+	"contentSecurityPolicy": false
+}));
+
+app.use("/docs/api", express.static("./docs/api/swagger-ui-dist"));
+app.use("/docs/js", express.static("./docs/js"));
+
+log("Express' plugins loaded");
 
 
+server.listen(APP_PORT, () => {
+
+	routes(app);
+	return log(process.env.LOCAL_HTTPS ?
+		`HTTPS Server up and running at https://localhost:${APP_PORT}` :
+		`HTTP Server up and running at port ${APP_PORT}`
+	);
+
+});
+
+export default server;

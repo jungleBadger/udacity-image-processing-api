@@ -106,18 +106,13 @@
 
 
 	gulp.task("doc", function (cb) {
-		if (!isProd) {
-			return cb();
-		}
 		let config = require("./jsdoc-config.json");
-		gulp.src(["README.md", "./server/**/*.js", "./submodules_dev/**/server/**/*.js"], {read: false})
+		gulp.src(["README.md", "./server/dist/**/*.js"], {read: false})
 			.pipe(jsdoc(config, cb));
 	});
 
 	gulp.task("swagger-route", function (done) {
-		if (!isProd) {
-			return done();
-		}
+
 		const swaggerUiAssetPath = require("swagger-ui-dist").absolutePath();
 		log(colors.green(`Replacing swagger route to ${colors.cyan("/api-docs.json")}`));
 		replace({
