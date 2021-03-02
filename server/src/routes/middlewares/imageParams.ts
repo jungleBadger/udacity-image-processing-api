@@ -1,8 +1,9 @@
 "use strict";
 
+import {Request, Response} from "express";
 
 export default {
-	validateImageParams(req: any, res: any, next: any) {
+	validateImageParams(req: Request, res: Response, next: Function) {
 
 		let imageId: String;
 		let width: Number;
@@ -14,13 +15,13 @@ export default {
 			imageId = req.query.imageId as String;
 		}
 
-		if (req.query.width && req.query.width <= 0) {
+		if (req.query.width && Number(req.query.width) <= 0) {
 			return res.status(400).send(`Invalid "width" value: ${req.query.width}`);
 		} else {
 			width = Number(req.query.width) as Number;
 		}
 
-		if (req.query.height && req.query.height <= 0) {
+		if (req.query.height && Number(req.query.height) <= 0) {
 			return res.status(400).send(`Invalid "height" value: ${req.query.height}`);
 		} else {
 			height = Number(req.query.width) as Number;

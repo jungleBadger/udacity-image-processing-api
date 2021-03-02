@@ -5,29 +5,41 @@ import * as fsAsync from "fs/promises";
 import * as sharp from "sharp";
 import * as Stream from "stream";
 
-const FULL_IMAGES_PATH: String = "./images/full";
-const PROCESSED_IMAGES_PATH: String = "./images/processed"
+const FULL_IMAGES_PATH: string = "./images/full";
+const PROCESSED_IMAGES_PATH: string = "./images/processed"
 
+
+export interface SharpImage {
+	imageId: number,
+	width: number,
+	height: number,
+	isOriginal: boolean,
+	getStockImagePath: Function,
+	getImagePath: Function,
+	readImageStream: Function,
+	checkIfOriginalImageExists: Function,
+	init: Function
+}
 
 export default {
 
 	/**
-	 *  @type {String}
+	 *  @type {string}
 	 */
-	"imageId": "" as String,
+	"imageId": "",
 
 	/**
-	 *  @type {Number}
+	 *  @type {number}
 	 */
-	"width": 0 as Number,
+	"width": 0,
 
 	/**
-	 *  @type {Number}
+	 *  @type {number}
 	 */
-	"height": 0 as Number,
+	"height": 0,
 
 	/**
-	 *  @type {Boolean}
+	 *  @type {boolean}
 	 */
 	"isOriginal": true,
 
@@ -35,9 +47,9 @@ export default {
 	 * Calculates the stock image path based on a constant and image ID.
 	 *
 	 * @method getStockImagePath
-	 * @return {String} - The stock image path.
+	 * @return {string} - The stock image path.
 	 */
-	getStockImagePath(): String {
+	getStockImagePath(): string {
 		return `${FULL_IMAGES_PATH}/${this.imageId}`;
 	},
 
@@ -45,9 +57,9 @@ export default {
 	 * Calculates the processed image path based on a constant, combination of width and height, and the image ID.
 	 *
 	 * @method getImagePath
-	 * @return {String} - The processed image path.
+	 * @return {string} - The processed image path.
 	 */
-	getImagePath(): String {
+	getImagePath(): string {
 		return (this.isOriginal ?
 			this.getStockImagePath() :
 			`${PROCESSED_IMAGES_PATH}/${this.width}x${this.height}/${this.imageId}`
@@ -72,7 +84,7 @@ export default {
 		}
 	},
 
-	async checkIfOriginalImageExists(): Promise<Boolean> {
+	async checkIfOriginalImageExists(): Promise<boolean> {
 		try {
 			let fileData = await fsAsync.open(this.getStockImagePath(), "r");
 			await fileData.close();
@@ -82,7 +94,7 @@ export default {
 		}
 	},
 
-	async checkIfTransformedImageExists(): Promise<Boolean> {
+	async checkIfTransformedImageExists(): Promise<boolean> {
 		try {
 			let fileData = await fsAsync.open(this.getImagePath(), "r");
 			await fileData.close();
@@ -99,15 +111,15 @@ export default {
 	 * @constructor
 	 * @method init
 	 * @async
-	 * @param {String} imageId - The image ID.
-	 * @param {Number} [width=0] - The image desired width.
-	 * @param {Number} [height=0] - The image desired height.
+	 * @param {string} imageId - The image ID.
+	 * @param {number} [width=0] - The image desired width.
+	 * @param {number} [height=0] - The image desired height.
 	 * @throws It will throw a `400 - Bad request` error if the `imageId` parameter is not available.
 	 * @throws It will throw a `404 - Not found` error if the `imageId` could not be found within the stock image folder.
 	 * @throws It will throw a `500 - Internal server` error if some processing issue happens.
-	 * @return {Object} - The constructed file representation.
+	 * @return {SharpImage} - The constructed file representation.
 	 */
-	"init": async function Constructor(imageId: String, width: Number = 0, height: Number = 0): Promise<Object> {
+	"init": async function Constructor(imageId: string, width: number = 0, height: number = 0): Promise<SharpImage> {
 		if (!imageId) {
 			throw new Error(JSON.stringify({
 				"status": 400,

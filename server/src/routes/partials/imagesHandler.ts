@@ -3,7 +3,7 @@
 import {Router} from "express";
 import sharpImageTs from "../../helpers/sharpImage";
 import validators from "../middlewares/imageParams"
-const router: any = Router();
+const router = Router();
 
 /**
  * @swagger
@@ -46,7 +46,7 @@ router.get("/",
 	validators.validateImageParams,
 	async (req, res) => {
 		try {
-			let image: any = await sharpImageTs.init(res.locals.imageId, res.locals.width, res.locals.height);
+			const image = await sharpImageTs.init(res.locals.imageId, res.locals.width, res.locals.height);
 			res.type("jpg").status(200);
 			image.readImageStream().pipe(res);
 		} catch (e) {

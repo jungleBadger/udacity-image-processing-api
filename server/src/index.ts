@@ -1,12 +1,9 @@
 "use strict";
 
 import * as dotenv from "dotenv";
-let dotEnvProps: any = {"silent": true};
-dotenv.config(dotEnvProps);
+dotenv.config();
 
 import * as fs from "fs";
-import * as https from "https";
-import * as http from "http";
 import * as express from "express";
 import * as debug from "debug";
 import * as helmet from "helmet";
@@ -15,24 +12,24 @@ import * as engines from "consolidate"
 
 import routes from "./routes/routes";
 
-const log: any = debug("app:main");
-const httpLog: any = debug("app:endpoint");
-const app: any = express();
+const log = debug("app:main");
+const httpLog = debug("app:endpoint");
+const app = express();
 const APP_PORT: Number|String = process.env.APP_PORT || 3030;
-let server: any;
+let server: express.Application;
 
 
 log("Main dependencies loaded");
 
 
 if (process.env.LOCAL_HTTPS) {
-	server = https.createServer({
+	server = require("https").createServer({
 		"key": fs.readFileSync("./root/certificates/local/localhost-privkey.pem"),
 		"cert": fs.readFileSync("./root/certificates/local/localhost-cert.pem"),
 		"rejectUnauthorized": false
 	}, app);
 } else {
-	server = http.createServer(app);
+	server = require("http").createServer(app);
 }
 
 if (httpLog.enabled) {
