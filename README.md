@@ -1,4 +1,4 @@
-# Image Processing API - Fullstack ND
+# Image Processing API - Fullstack/Masterclass ND
 
 ## Intro
 
